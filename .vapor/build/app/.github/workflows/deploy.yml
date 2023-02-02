@@ -1,7 +1,4 @@
-env:
-  environment: production
-
-name: Deploy to $environment
+name: Deploy to Production
 
 on:
   release:
@@ -11,7 +8,7 @@ jobs:
   deploy:
     runs-on: ubuntu-22.04
     environment: 
-        name: $environment
+        name: production
         url: https://qbtixgvyyxiombglixxm75gbpa0jttyj.lambda-url.us-east-1.on.aws/
     steps:
       - name: Checkout Code
@@ -35,7 +32,12 @@ jobs:
       - name: Install Project Dependencies
         run: composer install --no-interaction --prefer-dist --optimize-autoloader
 
+      - name: Vapor Team
+        run: vapor team:current
+        env:
+          VAPOR_API_TOKEN: ${{ secrets.VAPOR_API_TOKEN }}
+
       - name: Deploy Environment
-        run: vapor deploy --commit="${{ github.ref_name }}" --message="${{ github.event.head_commit.message }}" $environment
+        run: vapor deploy --commit="${{ github.ref_name }}" --message="${{ github.event.head_commit.message }}"
         env:
           VAPOR_API_TOKEN: ${{ secrets.VAPOR_API_TOKEN }}
