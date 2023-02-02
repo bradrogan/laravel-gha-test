@@ -17,7 +17,7 @@ jobs:
         uses: lewagon/wait-on-check-action@v1.2.0
         with:
           ref: ${{ github.ref }}
-          check-name: 'Execute tests (Unit and Feature tests) via PHPUnit'
+          check-name: 'laravel-tests'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           wait-interval: 20
 
