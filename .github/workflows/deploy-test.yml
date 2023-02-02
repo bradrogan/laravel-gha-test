@@ -1,0 +1,22 @@
+name: Deploy to Test
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-22.04
+    environment: 
+        name: test
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Fake Deploy
+        run: echo "Deployed to Test!"
