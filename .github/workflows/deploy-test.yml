@@ -2,9 +2,8 @@ name: Deploy to Test
 
 on:
   push:
-    branches: [ "main" ]
-
-
+    branches: 
+      - 'main'
 jobs:
   deploy:
     runs-on: ubuntu-22.04
@@ -13,6 +12,14 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
+      
+      - name: Wait for tests to succeed
+        uses: lewagon/wait-on-check-action@v1.2.0
+        with:
+          ref: ${{ github.ref }}
+          check-name: 'Execute tests (Unit and Feature tests) via PHPUnit'
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          wait-interval: 20
 
       - name: Setup Node
         uses: actions/setup-node@v3

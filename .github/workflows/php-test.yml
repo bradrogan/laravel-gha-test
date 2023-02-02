@@ -2,9 +2,11 @@ name: PHP Test
 
 on:
   push:
-    branches: [ "main" ]
+    branches: 
+      - '**'
   pull_request:
-    branches: [ "main" ]
+    branches:
+      - '**' 
 
 jobs:
   laravel-tests:
